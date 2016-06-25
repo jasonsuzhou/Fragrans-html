@@ -1,0 +1,102 @@
+@charset "utf-8";
+header {
+	position:fixed;
+	z-index:9999;
+	width:100%;
+}
+/* CSS Document */
+.nav_line{
+	border-left: dashed 1px #5a3819;
+}
+.nav_line a, .nav_line > ul > li{
+	font-size:12px;
+}
+.navbar-header a {
+	border: none;
+	outline: none;
+}
+.banner_job {
+	/*width:1280px;*/
+	height: 300px;
+	background: url(../images/banner_job.jpg) no-repeat #5a3819;
+	background-position: center -150px;
+	margin: 0 auto;
+	padding: 0;
+}
+.banner_contact {
+	/*width:1280px;*/
+	height: 360px;
+	background: url(../images/banner_contact.jpg) no-repeat #5a3819;
+	background-position: center -100px;
+	margin: 0 auto;
+	padding: 0;
+}
+.logo_block {
+	width: 240px;
+	height: 60px;
+	display: block;
+	position: absolute;
+	background: url(../images/logo.png) no-repeat center #6b3f17;
+	margin: 0;
+	/*padding:10px;*/
+	box-shadow: 0 0 5px 0px rgba(0,0,0,0.5);
+	border: none;
+	outline: none;
+	overflow: hidden;
+	z-index: 99;/*border:#333 1px solid;*/
+}
+.btn-fragrans {
+	color: #ffffff;
+	background-color: #5a3819;
+	border-color: #46b8da;
+	margin-bottom: 2px;
+}
+.btn-fragrans:hover, .btn-fragrans:focus, .btn-fragrans.focus, .btn-fragrans:active, .btn-fragrans.active, .open > .dropdown-toggle.btn-fragrans {
+	color: #ffffff;
+	background-color: #754519;
+	border-color: #653509;
+}
+.btn-fragrans:active, .btn-fragrans.active, .open > .dropdown-toggle.btn-fragrans {
+	background-image: none;
+}
+.btn-fragrans.disabled, .btn-fragrans[disabled], fieldset[disabled] .btn-fragrans, .btn-fragrans.disabled:hover, .btn-fragrans[disabled]:hover, fieldset[disabled] .btn-fragrans:hover, .btn-fragrans.disabled:focus, .btn-fragrans[disabled]:focus, fieldset[disabled] .btn-fragrans:focus, .btn-fragrans.disabled.focus, .btn-fragrans[disabled].focus, fieldset[disabled] .btn-fragrans.focus, .btn-fragrans.disabled:active, .btn-fragrans[disabled]:active, fieldset[disabled] .btn-fragrans:active, .btn-fragrans.disabled.active, .btn-fragrans[disabled].active, fieldset[disabled] .btn-fragrans.active {
+	background-color: #5a3819;
+	border-color: #46b8da;
+}
+.btn-fragrans .badge {
+	color: #5a3819;
+	background-color: #ffffff;
+}
+
+.footer_block{
+	color:#FFF;
+	background: url(../images/footer_bg.png) repeat #5a3819;
+}
+.copyright_info{
+	font-size:12px;
+}
+.fixed_header_box{
+	width:auto;
+	height:50px;
+	margin:0 auto;
+	padding:0;
+	clear:both;
+	display:block;
+	overflow:hidden;
+}
+
+/* ===== Back to Top link ===== */
+.backtotop {
+	background-color: #70431b;
+	padding: 10px 15px;
+	font-size: 18px;
+	color: #FFF;
+	border-radius: 3px;
+	right:0;
+	/*-webkit-transition: background 300ms;
+	-moz-transition: background 300ms;
+	transition: background 300ms;*/
+}
+.backtotop:hover {
+	background:#F90;
+}

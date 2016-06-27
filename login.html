@@ -85,7 +85,7 @@
               <div class="sign-inner">
                 <h3 class="first-child" style="text-align:center;">会员登录</h3>
                 <hr>
-                <form role="form">
+                <form role="form" id="loginForm" name="loginForm" method="post">
                   <div class="input-group">
                     <span class="input-group-addon">
                       <i class="fa fa-user"></i>
@@ -123,7 +123,7 @@
                   </div>
 
 				  -->
-                  <a href="#" type="submit" class="btn btn-block btn-fragrans">登录</a>
+                  <a href="#" type="submit" id="loginButton" class="btn btn-block btn-fragrans">登录</a>
                   <hr>
                 </form>
                 <p>还不是会员?
@@ -132,17 +132,6 @@
                 <div class="pwd-lost">
                   <div class="pwd-lost-q show">忘记密码了?
                     <a href="#">点击这里来恢复吧！</a>
-                  </div>
-                  <div class="pwd-lost-f hidden">
-                    <p class="text-muted">Enter your email address below and we will send you a link to reset your
-                      password.</p>
-                    <form class="form-inline" role="form">
-                      <div class="form-group">
-                        <label class="sr-only" for="email-pwd">Email address</label>
-                        <input type="email" class="form-control" id="email-pwd" placeholder="Enter Your Mail">
-                      </div>
-                      <button type="submit" class="btn btn-block ">Send</button>
-                    </form>
                   </div>
                 </div>
                 <!-- / .pwd-lost -->
@@ -204,6 +193,10 @@
       function refreshVerifyCode(obj) {
       	  $(obj).attr('src', 'http://www.fragrans.com.cn/Fragrans/admin/admin_getVerifyCode.do?' + Math.random());
        }
+	   $('#loginButton').on('click', function(){
+			window.sessionStorage.setItem("accessToken", "testjaosn");
+	   });
+	   alert(window.sessionStorage.getItem("accessToken"));
     </script>
   
 

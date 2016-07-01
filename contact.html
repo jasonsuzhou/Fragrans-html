@@ -51,7 +51,7 @@
     </div>
   </div>
 </header>
-<div id="carousel-example" class="carousel slide" data-interval="false" data-ride="carousel">
+<div id="carousel-example" class="carousel slide hidden-xs" data-interval="false" data-ride="carousel">
   <div class="carousel-inner banner_contact">
     <div class="item active "> 
       <!--<img src="images/banner_job.jpg" style="height:300px">
@@ -79,7 +79,7 @@
   </div>
 </div>
 <!-- / .Topic Header -->
-<div class="container">
+<div class="container hidden-xs">
   <div class="row">
     <div class="col-md-12 text-center">
       <div class="page-header" style="color:#F60">
@@ -123,13 +123,13 @@
           <div class="col-md-6 col-sm-6">
             <div class="form-group">
               <label>姓 <font color="red">*</font> </label>
-              <input class="form-control" id="lastName" name="lastName" placeholder="请输入姓氏" type="text">
+              <input class="form-control" id="lastName" name="lastName" placeholder="请输入姓氏" type="text" onfocus="hidePopover(this)">
             </div>
           </div>
           <div class="col-md-6 col-sm-6">
             <div class="form-group">
               <label>名 <font color="red">*</font> </label>
-              <input class="form-control" id="firstName" name="firstName" placeholder="请输入名字" type="text">
+              <input class="form-control" id="firstName" name="firstName" placeholder="请输入名字" type="text" onfocus="hidePopover(this)">
             </div>
           </div>
         </div>
@@ -137,13 +137,13 @@
           <div class="col-md-6 col-sm-6">
             <div class="form-group">
               <label>邮箱 <font color="red">*</font> </label>
-              <input id="email" name="email" class="form-control" placeholder="请输入邮箱地址" type="email">
+              <input id="email" name="email" class="form-control" placeholder="请输入邮箱地址" type="email" onfocus="hidePopover(this)">
             </div>
           </div>
           <div class="col-md-6 col-sm-6">
             <div class="form-group">
               <label>手机 <font color="red">*</font> </label>
-              <input id="phone" name="phone" class="form-control" placeholder="请输入手机号码" type="text">
+              <input id="phone" name="phone" class="form-control" placeholder="请输入手机号码" type="text" onfocus="hidePopover(this)">
             </div>
           </div>
         </div>
@@ -151,7 +151,7 @@
           <div class="col-md-12">
             <div class="form-group">
               <label>留言内容 <font color="red">*</font> </label>
-              <textarea id="message" name="message" class="form-control" placeholder="这里写下你的留言" style="height:150px; resize: vertical;"></textarea>
+              <textarea id="message" name="message" class="form-control" placeholder="这里写下你的留言" style="height:150px; resize: vertical;" onfocus="hidePopover(this)"></textarea>
             </div>
           </div>
         </div>
@@ -208,11 +208,36 @@
 <script src="js/scrolltopcontrol.js"></script> 
 <script type="text/javascript">
       $('#messageSumbit').click(function(){
+						var lastName = $('#lastName').val();
+						if (lastName == null || lastName == "") {
+							$('#lastName').popover({content:'<font color="red"><i class="fa fa-exclamation-circle"></i> 姓不能为空</font>',placement:'top',html:true,trigger:'manual'});
+							$('#lastName').popover('show');
+							return;
+						}
                       	var firstName = $('#firstName').val();
-                      	var lastName = $('#lastName').val();
+						if (firstName == null || firstName == "") {
+							$('#firstName').popover({content:'<font color="red"><i class="fa fa-exclamation-circle"></i> 名不能为空</font>',placement:'top',html:true,trigger:'manual'});
+							$('#firstName').popover('show');
+							return;
+						}
                       	var email = $('#email').val();
+						if (email == null || email == "") {
+							$('#email').popover({content:'<font color="red"><i class="fa fa-exclamation-circle"></i> 邮箱不能为空</font>',placement:'top',html:true,trigger:'manual'});
+							$('#email').popover('show');
+							return;
+						}
                       	var phone = $('#phone').val();
+						if (phone == null || phone == "") {
+							$('#phone').popover({content:'<font color="red"><i class="fa fa-exclamation-circle"></i> 手机号码不能为空</font>',placement:'top',html:true,trigger:'manual'});
+							$('#phone').popover('show');
+							return;
+						}
                       	var message = $('#message').val();
+						if (message == null || message == "") {
+							$('#message').popover({content:'<font color="red"><i class="fa fa-exclamation-circle"></i> 留言内容不能为空</font>',placement:'top',html:true,trigger:'manual'});
+							$('#message').popover('show');
+							return;
+						}
                       	$.ajax({
                       		url:'http://www.fragrans.com.cn/Fragrans/message/message_addSubmit.do',
                       		type:'post',
@@ -243,6 +268,10 @@
 	var marker = new BMap.Marker(new BMap.Point(120.633735,31.358667));  // 创建标注
 	map.addOverlay(marker);               // 将标注添加到地图中
 	marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+	
+	function hidePopover(obj) {
+		$(obj).popover('hide');
+	}
     </script>
 </body>
 </html>

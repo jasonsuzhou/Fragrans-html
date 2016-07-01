@@ -90,23 +90,23 @@
                     <span class="input-group-addon">
                       <i class="fa fa-user"></i>
                     </span>
-                    <input type="email" class="form-control" id="email" placeholder="请输入邮箱" data-original-title="" title="">
+                    <input type="text" class="form-control" id="uid" name="uid" placeholder="请输入用户名/邮箱/手机" onfocus="hidePopover(this)">
                   </div>
                   <br>
                   <div class="input-group">
                     <span class="input-group-addon">
                       <i class="fa fa-lock"></i>
                     </span>
-                    <input type="password" class="form-control" id="password" placeholder="请输入密码" data-original-title="" title="">
+                    <input type="password" class="form-control" id="password" name="password" placeholder="请输入密码" onfocus="hidePopover(this)">
                   </div>
                   <br>
                   <div class="input-group">
                     <div class="row">
                       <div class="col-xs-4">
-                        <input type="text" name="verifyCode" id="verifyCode" class="form-control" placeholder="验证码">
+                        <input type="text" name="verifyCode" id="verifyCode" class="form-control" placeholder="验证码" onfocus="hidePopover(this)">
                       </div>
                       <div class="col-xs-8">
-                        <img id="refreshCode" style="cursor: pointer;" onClick="refreshVerifyCode(this)" alt="" src="http://www.fragrans.com.cn/Fragrans/admin/admin_getVerifyCode.do">
+                        <img id="refreshCode" style="cursor: pointer;" onClick="refreshVerifyCode(this)" alt="">
                         <a href="javascript:refreshVerifyCode($('#refreshCode'))">看不清？换一张</a>
                       </div>
                     </div>
@@ -190,13 +190,65 @@
     </footer>
     <script src="js/scrolltopcontrol.js"></script>
     <script type="text/javascript">
-      function refreshVerifyCode(obj) {
-      	  $(obj).attr('src', 'http://www.fragrans.com.cn/Fragrans/admin/admin_getVerifyCode.do?' + Math.random());
+       function refreshVerifyCode(obj) {
+		  $.ajax({
+			url:'/Fragrans/member/member_getVerifyCode.do?' + Math.random(),
+			type:'get',
+			async: false,
+			dataType:'text',
+			success:function(data) {
+				$(obj).attr('src', data);
+			}
+		  });
        }
 	   $('#loginButton').on('click', function(){
-			window.sessionStorage.setItem("accessToken", "testjaosn");
+			var uid = $('#uid').val();
+			if (uid == null || uid == "") {
+				$('#uid').popover({content:'<font color="red"><i class="fa fa-exclamation-circle"></i> 用户名不能为空</font>',placement:'top',html:true,trigger:'manual'});
+				$('#uid').popover('show');
+				return;
+			}
+			var password = $('#password').val();
+			if (password == null || password == "") {
+				$('#password').popover({content:'<font color="red"><i class="fa fa-exclamation-circle"></i> 密码不能为空</font>',placement:'top',html:true,trigger:'manual'});
+				$('#password').popover('show');
+				return;
+			}
+			var verifyCode = $('#verifyCode').val();
+			if (verifyCode == null || verifyCode == "") {
+				$('#verifyCode').popover({content:'<font color="red"><i class="fa fa-exclamation-circle"></i> 请输入验证码</font>',placement:'top',html:true,trigger:'manual'});
+				$('#verifyCode').popover('show');
+				return;
+			}
+			$.ajax({
+					url:'/Fragrans/member/member_login.do',
+					type:'post',
+					dataType:'json',
+					async: false,
+					data:{uid:uid,password:password,verifyCode:verifyCode},
+					success:function(data){
+						if (data.status == 200) {
+							window.sessionStorage.setItem("accessToken", data.accessToken);
+							//alert("登录成功!" + window.sessionStorage.getItem("accessToken"));
+							window.location.href = "/";
+						} else {
+							if (data.status == 501) {
+								$('#verifyCode').popover({content:'<font color="red"><i class="fa fa-exclamation-circle"></i> 验证码错误</font>',placement:'top',html:true,trigger:'manual'});
+								$('#verifyCode').popover('show');
+							} else {
+								alert(data.message);
+							}
+						}
+					},
+					error:function() {
+						alert("服务器忙，请稍后再试!");
+					}
+				});
 	   });
-	   alert(window.sessionStorage.getItem("accessToken"));
+	   function hidePopover(obj) {
+	      $(obj).popover('hide');
+	   }
+	   refreshVerifyCode($('#refreshCode'));
     </script>
   
 

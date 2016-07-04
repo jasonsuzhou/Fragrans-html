@@ -131,7 +131,7 @@
                 </p>
                 <div class="pwd-lost">
                   <div class="pwd-lost-q show">忘记密码了?
-                    <a href="#">点击这里来恢复吧！</a>
+                    <a href="findpass.html">点击这里来恢复吧！</a>
                   </div>
                 </div>
                 <!-- / .pwd-lost -->
@@ -230,7 +230,7 @@
 						if (data.status == 200) {
 							window.sessionStorage.setItem("accessToken", data.accessToken);
 							//alert("登录成功!" + window.sessionStorage.getItem("accessToken"));
-							window.location.href = "/";
+							window.location.href = "/profile.html";
 						} else {
 							if (data.status == 501) {
 								$('#verifyCode').popover({content:'<font color="red"><i class="fa fa-exclamation-circle"></i> 验证码错误</font>',placement:'top',html:true,trigger:'manual'});

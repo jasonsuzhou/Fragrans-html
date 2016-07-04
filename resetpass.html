@@ -1,0 +1,107 @@
+<html><head>
+    <meta name="keywords" content="酒店，斐利，斐利酒店，酒店斐利，苏州酒店，咖啡厅，斐利咖啡厅">
+    <meta name="description" content="苏州斐利酒店诚聘英才">
+    <title>重置密码-斐利酒店</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="css/fragrans.css" rel="stylesheet" type="text/css">
+	<link href="css/pace.css" rel="stylesheet" type="text/css">
+    <link rel="icon" href="images/icon/favicon.ico">
+  </head><body>
+    <div class="section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="alert alert-dismissable alert-success collapse" id="alertInfo">
+              <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+			  <font color="white">
+              <strong><i class="fa fa-check"></i>&nbsp;重置密码成功!</strong>即将跳转到登录页面</div>
+			  </font>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <h1>重置密码</h1>
+            <hr>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <form role="form">
+			  <div class="form-group">
+                <label class="control-label" for="newPassword">新密码</label>
+                <input class="form-control" id="newPassword" name="newPassword" type="password" onfocus="hidePopover(this)" placeholder="请输入新密码">
+              </div>
+			  <div class="form-group">
+                <label class="control-label" for="conPassword">确认密码</label>
+                <input class="form-control" id="conPassword" name="conPassword" type="password" onfocus="hidePopover(this)" placeholder="请重新输入新密码">
+              </div>
+              <a type="submit" class="btn btn-default btn-fragrans" onclick="resetPassword()">确认提交</a>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+
+</body>
+<script type="text/javascript" src="js/pace/pace.js"></script>
+<script>
+$.urlParam = function(name){
+    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+    if (results==null){
+       return null;
+    }
+    else{
+       return results[1] || 0;
+    }
+}
+function resetPassword() {
+	var newPassword = $('#newPassword').val();
+	if (newPassword == null || newPassword == "") {
+		$('#newPassword').popover({content:'<font color="red"><i class="fa fa-exclamation-circle"></i> 新密码不能为空</font>',placement:'top',html:true,trigger:'manual'});
+		$('#newPassword').popover('show');
+		return;
+	}
+	var conPassword = $('#conPassword').val();
+	if (conPassword == null || conPassword == "") {
+		$('#conPassword').popover({content:'<font color="red"><i class="fa fa-exclamation-circle"></i> 确认密码不能为空</font>',placement:'top',html:true,trigger:'manual'});
+		$('#conPassword').popover('show');
+		return;
+	}
+	if (conPassword != newPassword) {
+		$('#conPassword').popover({content:'<font color="red"><i class="fa fa-exclamation-circle"></i> 确认密码与新密码不一致</font>',placement:'top',html:true,trigger:'manual'});
+		$('#conPassword').popover('show');
+		return;
+	}
+	var code = $.urlParam('code');
+	var timestamp = $.urlParam('timestamp');
+	$.ajax({
+		url:'/Fragrans/member/member_resetPassword.do',
+		type:'post',
+		data:{password:newPassword,code:code,timestamp:timestamp},
+		dataType:'json',
+		success:function(data){
+			if (data.status == 200){
+				$('#alertInfo').removeClass('collapse');
+				setTimeout(function(){
+					window.location.href = 'login.html';
+				},3000);
+			} else {
+				alert(data.message);
+			}
+		},
+		error:function(data) {
+			alert("服务器忙，请稍后再试!");
+		}
+	});
+}
+function hidePopover(obj) {
+  $(obj).popover('hide');
+}
+</script>
+</html>
